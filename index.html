@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Mqtt</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    </body>
+</head>
+<style>
+    body{
+        background-image:url(https://www.kimballstock.com/pix/CAT/08/CAT-08-KH0003-01P.JPG);
+        background-size: cover;
+        background-repeat: no-repeat;
+        height: 100%;
+}
+
+
+
+
+
+
+
+</style>
+
+<body>
+
+    <br>
+    <div id="header_text" class=" text-center">
+
+        <h1 class="text-white">&nbsp;MQTT on Web Browser</h1>
+        <br>
+    </div>
+    <div class="container">
+        <div class="row">
+            <!-- column 1 -->
+            <div class="col">
+                <div class="">
+                    <div class="container bg-white">
+                        <br>
+                        <center>
+                            <div class="card-header">
+                                <div class="text-center h4">Broker</div>
+                            </div>
+                            <div class="card-body">
+                                <label for="broker_input"> Address:</label>
+                                <input type="text" class="form-control" id="broker_input" value="wss://test.mosquitto.org:8081/mqtt"><br>
+                                <button id="connect_btn" class="btn btn-outline-success">Connect</button>
+                                <button class="btn btn-outline-danger pure-button disconnect_btn">Disconnect</button>
+                            </div>
+                        </center>
+                        <div>
+                            Status: <br>
+                            <div id="display_status" class="text-center alert alert-secondary">
+                                Disconnected
+                            </div>
+                        </div>
+                        <div class="card-footer"></div>
+                        Sent information: <br><br>
+                        <table class="text-center table table-hover table-bordered">
+                            <thead class="table-success">
+                                <tr>
+                                    <th>Topic</th>
+                                    <th>Payload</th>
+                                    <th>Timestamp</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbl-body-pub">
+                            </tbody>
+                        </table>
+                        <br>
+                    </div>
+                </div>
+            </div>
+
+            <!-- column 2 -->
+            <div class="col">
+                <div class="">
+                    <div class="container bg-white">
+                        <br>
+                        <div class="card-header">
+                            <div class="text-center h4">Publisher</div>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label class="text-left">Topic:</label>
+                                <input type="text" class="form-control" id="topic" value="ComputerLab">
+                            </div>
+                            <div class="form-group">
+                                <label class="text-justify">Payload:</label>
+                                <input type="text" class="form-control" id="payload" value="Temperature 30°C">
+                            </div>
+                            <button id="publish_btn" class="btn btn-outline-success" style="padding:10px">Publish</button>
+                        </div>
+                        <div class="card-footer"></div>
+                        Received information: <br><br>
+                        <table class="text-center table table-hover table-bordered">
+                            <thead class="table-success">
+                                <tr>
+                                    <th>Topic</th>
+                                    <th>Payload</th>
+                                    <th>Timestamp</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbl-body-sub">
+                            </tbody>
+                        </table>
+                        <br>
+                    </div>
+                </div>
+            </div>
+            <!-- column 3 -->
+            <div class="col">
+                <div class="">
+                    <div class="container bg-white">
+                        <br>
+                        <center>
+                            <div class="card-header">
+                                <div class="text-center h4">Subscriber</div>
+                            </div>
+                        </center>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label class="text-left">Topic:</label>
+                                <input type="text" class="form-control" id="topic-sub" value="ComputerLab">
+                            </div>
+                            <center>
+                                <button id="subscribe_btn" class="btn btn-outline-success sub">Subscribe</button>
+                                <button id="unsubscribe_btn" class="btn btn-outline-danger sub">Unsubscribe</button>
+                            </center>
+                        </div><br><br><br><br>
+                        <div class="card-footer"></div>
+                        Subscribed information: <br><br>
+                        <table class="text-center table table-hover table-bordered">
+                            <thead class="table-success">
+                                <tr>
+                                    <th>Topic</th>
+                                    <th>Timestamp</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbl-body">
+                            </tbody>
+
+                        </table>
+                        <br>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.js"></script>
+<script src="browserMqtt.js"></script>
+<script src="controller.js"></script>
+
+</html>
