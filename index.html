@@ -1,145 +1,123 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Mqtt</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-        crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-        crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-        crossorigin="anonymous"></script>
-    </body>
+    <title>Mqtt On Browser</title>
+    <link rel="stylesheet" href="mqttStyle.css">
+    <link rel="stylesheet" href="scripts/bootstrap.min.css">
+    <script src="scripts/jquery.min.js"></script>
+    <script src="scripts/popper.min.js"></script>
+    <script src="scripts/bootstrap.min.js"></script>
 </head>
-<style>
-    body{
-        background-image:url(https://www.kimballstock.com/pix/CAT/08/CAT-08-KH0003-01P.JPG);
-        background-size: cover;
-        background-repeat: no-repeat;
-        height: 100%;
-}
 
-
-
-
-
-
-
-</style>
 
 <body>
-
-    <br>
-    <div id="header_text" class=" text-center">
-
-        <h1 class="text-white">&nbsp;MQTT on Web Browser</h1>
-        <br>
+    <div class="text-center" id="mqtt_body">
+        <h1>MQTT on Web Browser</h1>
     </div>
     <div class="container">
         <div class="row">
             <!-- column 1 -->
             <div class="col">
-                <div class="">
-                    <div class="container bg-white">
-                        <br>
+                <div class="card">
+                    <div class="container" id="card">
                         <center>
-                            <div class="card-header">
-                                <div class="text-center h4">Broker</div>
+                            <div class="card-header" id="card_header">
+                                <div class="text-center h4" id="h4">Broker</div>
+
                             </div>
-                            <div class="card-body">
-                                <label for="broker_input"> Address:</label>
+                            <div class="card-body" id="incard">
+                                <label for="input-broker-ws"> Address:</label>
                                 <input type="text" class="form-control" id="broker_input" value="wss://test.mosquitto.org:8081/mqtt"><br>
-                                <button id="connect_btn" class="btn btn-outline-success">Connect</button>
-                                <button class="btn btn-outline-danger pure-button disconnect_btn">Disconnect</button>
+
+                                <button id="btn-connect" class="btn btn-outline-success">Connect</button>
+
+                                <button class="btn btn-outline-danger pure-button btn-disconnect">Disconnect</button>
                             </div>
                         </center>
                         <div>
                             Status: <br>
-                            <div id="display_status" class="text-center alert alert-secondary">
+                            <div id="status" class="text-center alert alert-secondary">
                                 Disconnected
                             </div>
                         </div>
-                        <div class="card-footer"></div>
-                        Sent information: <br><br>
+                        Incoming message: <br>
                         <table class="text-center table table-hover table-bordered">
                             <thead class="table-success">
                                 <tr>
                                     <th>Topic</th>
-                                    <th>Payload</th>
+                                    <th>Message</th>
+                                    <th>Timestamp</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbl-body">
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- column 2 -->
+            <div class="col">
+                <div class="card">
+                    <div class="container" id="card">
+                        <center>
+                            <div class="card-header" id="card_header">
+                                <div class="text-center h4" id="h4">Publisher</div>
+                            </div>
+                        </center>
+                        <div class="card-body" id="incard">
+                            <div class="form-group">
+                                <label class="text-left">Topic:</label>
+                                <input type="text" class="form-control" id="topic" placeholder="Enter a topic">
+                            </div>
+                            <div class="form-group">
+                                <label class="text-justify">Message:</label>
+                                <input type="text" class="form-control" id="message" placeholder="Enter a message">
+                            </div>
+                            <center>
+                                <button id="btn-pub" class="btn btn-outline-success" style="padding:13px">Publish</button></center>
+                        </div>
+                        Incoming message: <br>
+                        <table class="text-center table table-hover table-bordered">
+                            <thead class="table-success">
+                                <tr>
+                                    <th>Topic</th>
+                                    <th>Message</th>
                                     <th>Timestamp</th>
                                 </tr>
                             </thead>
                             <tbody id="tbl-body-pub">
-                            </tbody>
-                        </table>
-                        <br>
-                    </div>
-                </div>
-            </div>
 
-            <!-- column 2 -->
-            <div class="col">
-                <div class="">
-                    <div class="container bg-white">
-                        <br>
-                        <div class="card-header">
-                            <div class="text-center h4">Publisher</div>
-                        </div>
-                        <div class="card-body">
-                            <div class="form-group">
-                                <label class="text-left">Topic:</label>
-                                <input type="text" class="form-control" id="topic" value="ComputerLab">
-                            </div>
-                            <div class="form-group">
-                                <label class="text-justify">Payload:</label>
-                                <input type="text" class="form-control" id="payload" value="Temperature 30°C">
-                            </div>
-                            <button id="publish_btn" class="btn btn-outline-success" style="padding:10px">Publish</button>
-                        </div>
-                        <div class="card-footer"></div>
-                        Received information: <br><br>
-                        <table class="text-center table table-hover table-bordered">
-                            <thead class="table-success">
-                                <tr>
-                                    <th>Topic</th>
-                                    <th>Payload</th>
-                                    <th>Timestamp</th>
-                                </tr>
-                            </thead>
-                            <tbody id="tbl-body-sub">
                             </tbody>
                         </table>
-                        <br>
                     </div>
                 </div>
             </div>
             <!-- column 3 -->
             <div class="col">
-                <div class="">
-                    <div class="container bg-white">
-                        <br>
+                <div class="card">
+                    <div class="container" id="card">
                         <center>
-                            <div class="card-header">
-                                <div class="text-center h4">Subscriber</div>
+                            <div class="card-header" id="card_header">
+                                <div class="text-center h4" id="h4">Subscriber</div>
                             </div>
                         </center>
-                        <div class="card-body">
+                        <div class="card-body" id="incard">
                             <div class="form-group">
                                 <label class="text-left">Topic:</label>
-                                <input type="text" class="form-control" id="topic-sub" value="ComputerLab">
+                                <input type="text" class="form-control" id="topic-sub" placeholder="Enter a topic">
                             </div>
+
                             <center>
-                                <button id="subscribe_btn" class="btn btn-outline-success sub">Subscribe</button>
-                                <button id="unsubscribe_btn" class="btn btn-outline-danger sub">Unsubscribe</button>
+                                <button id="btn-sub" class="btn btn-outline-success">Subscribe</button>
+                                <button id="btn-unsub" class="btn btn-outline-danger">Unsubscribe</button>
                             </center>
                         </div><br><br><br><br>
-                        <div class="card-footer"></div>
-                        Subscribed information: <br><br>
+                        Incoming message: <br>
                         <table class="text-center table table-hover table-bordered">
                             <thead class="table-success">
                                 <tr>
@@ -147,21 +125,25 @@
                                     <th>Timestamp</th>
                                 </tr>
                             </thead>
-                            <tbody id="tbl-body">
-                            </tbody>
+                            <tbody id="tbl-body-sub">
 
+                            </tbody>
                         </table>
-                        <br>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-</body>
 
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.js"></script>
-<script src="browserMqtt.js"></script>
-<script src="controller.js"></script>
+        </div>
+
+
+
+    </div>
+
+    <!-- script -->
+    <script src="scripts/sweetalert2@8.js"></script>
+    <script src="scripts/moment.js"></script>
+    <script src="scripts/browserMqtt.js"></script>
+    <script src="scripts/controller.js"></script>
+</body>
 
 </html>

@@ -1,0 +1,41 @@
+
+    html body{
+        height: 100%;
+        background-image:url('https://images.unsplash.com/photo-1483488792196-78bedff29c21?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+    }
+
+    .card{
+        height: 100%;
+        color:cornflowerblue;
+    }
+    .h4 {
+        background-color: burlywood;
+        padding: 5px;
+        color: black;
+      
+    }
+
+    #mqtt_body{
+        background-image: url('https://images.unsplash.com/photo-1483488792196-78bedff29c21?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=8035.jpg');
+        padding: 2%;
+        color: white;
+    }
+
+    #h4{
+        background-color: rgba(0,0,0,0.1);
+    }
+
+    #card_header{
+        background-color: transparent;
+    }
+    #card{
+        border: solid black;
+    }
+    th{
+        background-color: pink;
+    }
+    #incard{
+        border:black;
+    }
+
+
